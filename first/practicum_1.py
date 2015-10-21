@@ -8,6 +8,10 @@ stack = []
 answer = []
 i = 0;
 
+#setting the alphabet of expression
+alphabet = ['a', 'b', 'c']
+
+
 def error() :
 	print "Not a regular expression!"
 	exit()
@@ -34,15 +38,16 @@ def aadd(x, y) :
 
 def star(x) :
 	return '(' + x + ")*"
-def astar(x) :
+def astar(x, l) :
 	z = set(x)
 	z.add(0)
-	for i in range(3) :
+	for i in range(l) :
 		a = aconcat(z, x)
 		for j in a :
 			z.add(j)
 	return z
 
+#function to prevent extra brackets
 def checkplus(string) :
 	for i in string :
 		if i == '+' :
@@ -56,7 +61,7 @@ for char in string:
 	if i == len(string) + 1: 
 		break
 	print "Step number " + str(i)
-	if char == 'c' or char == 'a' or char == 'b':
+	if char in alphabet:
 		stack.append(char)
 		answer.append(set({1}))
 	elif char == '1' :
@@ -76,7 +81,7 @@ for char in string:
 		if len(stack) < 1 :
 			error()
 		stack.append(star(stack.pop()))
-		answer.append(astar(answer.pop()))
+		answer.append(astar(answer.pop(), l))
 	else :
 		error()
 	print "Answer = ",
@@ -88,5 +93,5 @@ answer = answer.pop()
 for f in sorted(answer) :
 	if f % k == l :
 		print f
-		break
+		exit(0)
 print "INF"
