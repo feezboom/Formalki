@@ -6,8 +6,9 @@ k = (int)(string.split(' ')[1])
 l = (int)(string.split(' ')[2])
 string = string.split(' ')[0]
 
-#answer contains sets of numbers which could
+#answer contains sets of lengths of regular expressions which could
 #be built from regular expressions contained in stack
+#at the same stack position in answer
 answer = []
 i = 0;
 #setting the alphabet of expression
@@ -17,23 +18,23 @@ def error() :
 	print "Not a regular expression!"
 	exit()
 
-def aconcat(x, y) :
+def aconcat(set_x, set_y) :
 	z = set({})
-	for i in x :
-		for j in y :
+	for i in set_x :
+		for j in set_y :
 			z.add(i + j)
 	return z
 
-def aadd(x, y) :
-	for i in y :
-		x.add(i)
-	return x
+def aadd(set_x, set_y) :
+	for i in set_y :
+		set_x.add(i)
+	return set_x
 
-def astar(x, l) :
-	z = set(x)
+def astar(set_x, l_from_input) :
+	z = set(set_x)
 	z.add(0)
-	for i in range(l) :
-		a = aconcat(z, x)
+	for i in range(l_from_input) :
+		a = aconcat(z, set_x)
 		for j in a :
 			z.add(j)
 	return z
@@ -61,8 +62,8 @@ for char in string:
 	else :
 		error()
 
-for f in sorted(answer.pop()) :
-	if f % k == l :
-		print f
+for possible_length in sorted(answer.pop()) :
+	if possible_length % k == l :
+		print possible_length
 		exit(0)
 print "INF"
