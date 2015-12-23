@@ -4,11 +4,11 @@ string = workfile.read()			# our input expression
 k = (int)(string.split(' ')[1])		# k from input
 l = (int)(string.split(' ')[2])		# l from input
 string = string.split(' ')[0]		# our regular input expression
-answer = [[0] * len(string) * 2]*len(string) * 2;	# our "stack"
+answer = [[0 for n in range(len(string))] for n in range(len(string))]	# our "stack"
 set_help = [0]*len(string)					# our help stack element
 alphabet = ['a', 'b', 'c']						# our alphabet
 currentStackPosition = 0;						# our current stack position
-i = 0;
+q = 0;
 def error() :									# if error
 	print "Not a regular expression!"
 	exit()
@@ -16,9 +16,14 @@ def aconcat() :#set_x, set_y) :					# concatenation of two last expressions in t
 	global currentStackPosition		
 	global answer
 	global set_help
+#	if (q == 16) :
+#		print answer[currentStackPosition - 2]
+#		print answer[currentStackPosition - 1]
+#		print
 	for i in range(len(string)) :
 		for j in range(len(string)) :
 			if ((answer[currentStackPosition - 2][i] == answer[currentStackPosition - 1][j] == 1) and (i + j < len(string))) :
+#				print i + j
 				set_help[i+j] = 1
 				
 	for i in range(len(string)) :
@@ -35,15 +40,18 @@ def aadd() :#set_x, set_y) :					# addidion of two last expressions in the stack
 	for i in range(len(string)) :
 		if (answer[currentStackPosition - 1][i] == 1) :
 			answer[currentStackPosition - 2][i] = 1
+			answer[currentStackPosition - 1][i] = 0
 	currentStackPosition -= 1;
 
-def aconcatForAstar(our_expression_to_concatenate) :	# help function for making star for the last expression in the stack
+def aconcatForAstar() :	# help function for making star for the last expression in the stack
+	global set_help
 	global currentStackPosition
 	global answer
-	global set_help
 	for i in range(len(string)) :
 		for j in range(len(string)) :
-			if (our_expression_to_concatenate[i] == answer[currentStackPosition - 1][j] == 1 and (i + j) < len(string)) :
+			if (set_help[i] == answer[currentStackPosition - 1][j] == 1 and (i + j) < len(string)) :
+#				if i == 0:
+#					print i + j, "HELLO"
 				answer[currentStackPosition - 1][i + j] = 1;
 
 def astar(l_from_input) :								# making star for the last expression in the stack
@@ -53,33 +61,23 @@ def astar(l_from_input) :								# making star for the last expression in the st
 	set_help[0] = 1	#star always gives 0
 	for i in range(len(string) - 1) :	#filling the same as start expressions
 		set_help[i + 1] = answer[currentStackPosition - 1][i + 1]
-		
 	for i in range(l_from_input) :
-		aconcatForAstar(set_help)
+		aconcatForAstar()
+	answer[currentStackPosition - 1][0] = 1; #Because star always gives a zero
+	for i in range(len(string)) :#cleaning
+		set_help[i] = 0
 #program BEGGINING
+q = 0
 currentStackPosition = 0;
 for char in string:
-	i += 1
+	q += 1
 #	print "stackPosBEFORE=", currentStackPosition,
 
-	if i == len(string) + 1: 
+	if q == len(string) + 1: 
 		break
 	if char in alphabet:								# if char
-		print "STACKPOS:", currentStackPosition
-		print answer[0]
-		print answer[1]
-		print answer[2]
-		print answer[3]
-		print answer[4]
-		answer[currentStackPosition][1] = 1
-		currentStackPosition += 1
-		print "STACKPOS:", currentStackPosition
-		print answer[0]
-		print answer[1]
-		print answer[2]
-		print answer[3]
-		print answer[4]
-		break
+		answer[currentStackPosition][1] = 1;
+		currentStackPosition += 1;
 	elif char == '1' :									# if epsilon
 		answer[currentStackPosition][0] = 1
 		currentStackPosition += 1
@@ -99,7 +97,7 @@ for char in string:
 		error()
 	
 #	print "char = ", char, "curStackPos =  ", currentStackPosition, "possible lengths :"
-	print "char = ", char, #"i=", i,
+	print "char = ", char, #"q=", q,
 	for array_num in range(currentStackPosition) :
 		print "||",
 		for possible_length in range(len(string)) :	

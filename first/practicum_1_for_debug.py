@@ -54,13 +54,13 @@ def checkplus(string) :
 			return True
 	return False
 
-print string
+#print string
 
 for char in string:
 	i += 1
 	if i == len(string) + 1: 
 		break
-	print "Step number " + str(i)
+#	print "Step number " + str(i)
 	if char in alphabet:
 		stack.append(char)
 		answer.append(set({1}))
@@ -84,8 +84,8 @@ for char in string:
 		answer.append(astar(answer.pop(), l))
 	else :
 		error()
-	print "Answer = ",
-	print answer
+#	print "Answer = ",
+#	print answer
 	print "Stack = ",
 	print stack
 

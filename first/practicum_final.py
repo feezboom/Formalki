@@ -63,7 +63,7 @@ for char in string:
 	else :
 		error()
 	
-	print "Answer = ",
+#	print "Answer = ", "char=", char,
 	print answer
 
 for possible_length in sorted(answer.pop()) :
