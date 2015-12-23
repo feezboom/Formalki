@@ -65,21 +65,8 @@ for char in string:
 	if i == len(string) + 1: 
 		break
 	if char in alphabet:								# if char
-		print "STACKPOS:", currentStackPosition
-		print answer[0]
-		print answer[1]
-		print answer[2]
-		print answer[3]
-		print answer[4]
 		answer[currentStackPosition][1] = 1
 		currentStackPosition += 1
-		print "STACKPOS:", currentStackPosition
-		print answer[0]
-		print answer[1]
-		print answer[2]
-		print answer[3]
-		print answer[4]
-		break
 	elif char == '1' :									# if epsilon
 		answer[currentStackPosition][0] = 1
 		currentStackPosition += 1
@@ -113,3 +100,4 @@ for possible_length in range(len(string)) :				#making answer
 		print possible_length
 		exit(0)
 print "INF"
+
