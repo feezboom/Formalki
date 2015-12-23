@@ -10,7 +10,7 @@ string = string.split(' ')[0]
 #be built from regular expressions contained in stack
 #at the same stack position in answer
 answer = []
-i = 0;
+
 #setting the alphabet of expression
 alphabet = ['a', 'b', 'c']
 
@@ -39,6 +39,7 @@ def astar(set_x, l_from_input) :
 			z.add(j)
 	return z
 
+i = 0;
 for char in string:
 	i += 1
 	if i == len(string) + 1: 
@@ -61,6 +62,9 @@ for char in string:
 		answer.append(astar(answer.pop(), l))
 	else :
 		error()
+	
+	print "Answer = ",
+	print answer
 
 for possible_length in sorted(answer.pop()) :
 	if possible_length % k == l :
